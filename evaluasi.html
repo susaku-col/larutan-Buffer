@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evaluasi - ChemBufferLab</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { display: ['Space Grotesk', 'sans-serif'], body: ['DM Sans', 'sans-serif'] }, colors: { primary: '#0d9488', accent: '#22d3ee', dark: '#0f172a', darker: '#020617', card: '#1e293b', muted: '#94a3b8' } } }
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-darker">
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- NAVBAR -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-darker/80 backdrop-blur-xl border-b border-border">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+          </div>
+          <span class="font-display font-bold text-xl">ChemBufferLab</span>
+        </div>
+        <div class="desktop-menu items-center gap-1">
+          <a href="index.html" class="nav-link px-4 py-2 text-sm font-medium">Home</a>
+          <a href="materi.html" class="nav-link px-4 py-2 text-sm font-medium">Materi</a>
+          <a href="simulasi.html" class="nav-link px-4 py-2 text-sm font-medium">Simulasi</a>
+          <a href="latihan.html" class="nav-link px-4 py-2 text-sm font-medium">Latihan</a>
+          <a href="game.html" class="nav-link px-4 py-2 text-sm font-medium">Game</a>
+          <a href="evaluasi.html" class="nav-link px-4 py-2 text-sm font-medium active">Evaluasi</a>
+        </div>
+        <button id="mobile-menu-btn" class="mobile-menu p-2 rounded-lg hover:bg-card">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+      <div id="mobile-menu" class="hidden pb-4">
+        <div class="flex flex-col gap-2">
+          <a href="index.html" class="nav-link px-4 py-2 text-sm font-medium text-left">Home</a>
+          <a href="materi.html" class="nav-link px-4 py-2 text-sm font-medium text-left">Materi</a>
+          <a href="simulasi.html" class="nav-link px-4 py-2 text-sm font-medium text-left">Simulasi</a>
+          <a href="latihan.html" class="nav-link px-4 py-2 text-sm font-medium text-left">Latihan</a>
+          <a href="game.html" class="nav-link px-4 py-2 text-sm font-medium text-left">Game</a>
+          <a href="evaluasi.html" class="nav-link px-4 py-2 text-sm font-medium text-left active">Evaluasi</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="relative z-10 pt-20">
+    <div class="max-w-4xl mx-auto px-4 py-10">
+      <h1 class="font-display text-3xl sm:text-4xl font-bold mb-2">Evaluasi Akhir</h1>
+      <p class="text-muted mb-10">Uji kemampuanmu dengan tes akhir larutan penyangga</p>
+      
+      <!-- SECTION 1: LOGIN SISWA -->
+      <div class="bg-card rounded-2xl border border-border p-8 mb-8" id="login-section">
+        <h3 class="font-display text-xl font-semibold mb-6 text-center">Masukkan Data Diri</h3>
+        <div class="max-w-sm mx-auto space-y-4">
+          <div>
+            <label class="block text-sm text-muted mb-1">Nama Lengkap</label>
+            <input type="text" id="student-name" class="w-full bg-dark border border-border rounded-lg px-4 py-2 focus:border-accent outline-none" placeholder="Masukkan nama...">
+          </div>
+          
+          <!-- INPUT BARU: Kelas & Absen -->
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm text-muted mb-1">Kelas</label>
+              <input type="text" id="student-class" class="w-full bg-dark border border-border rounded-lg px-4 py-2 focus:border-accent outline-none" placeholder="XII IPA 1">
+            </div>
+            <div>
+              <label class="block text-sm text-muted mb-1">No. Absen</label>
+              <input type="number" id="student-absen" class="w-full bg-dark border border-border rounded-lg px-4 py-2 focus:border-accent outline-none" placeholder="01">
+            </div>
+          </div>
+
+          <button onclick="checkLogin()" class="w-full btn-primary py-3 rounded-xl font-semibold text-white mt-4">
+            Mulai Evaluasi
+          </button>
+        </div>
+      </div>
+
+      <!-- SECTION 2: PRE-TEST INFO -->
+      <div class="hidden bg-card rounded-2xl border border-border p-8 mb-8" id="pre-test-info">
+        <div class="grid md:grid-cols-3 gap-6 mb-8">
+          <div class="text-center p-4 rounded-xl bg-dark border border-border"><div class="text-3xl font-display font-bold text-accent">15</div><div class="text-sm text-muted">Jumlah Soal</div></div>
+          <div class="text-center p-4 rounded-xl bg-dark border border-border"><div class="text-3xl font-display font-bold text-yellow-500">15</div><div class="text-sm text-muted">Menit</div></div>
+          <div class="text-center p-4 rounded-xl bg-dark border border-border"><div class="text-3xl font-display font-bold text-primary">100</div><div class="text-sm text-muted">Poin Maksimal</div></div>
+        </div>
+        <button class="w-full btn-primary px-8 py-4 rounded-xl font-semibold text-white" onclick="startEvaluation()">Mulai Evaluasi</button>
+      </div>
+      
+      <!-- SECTION 3: TEST AREA -->
+      <div class="hidden" id="test-area">
+        <div class="flex justify-between items-center mb-6">
+          <div class="flex items-center gap-4">
+            <div class="px-4 py-2 rounded-full bg-card border border-border flex items-center gap-2">
+              <svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span class="font-display font-bold" id="timer">15:00</span>
+            </div>
+          </div>
+          <span class="text-sm text-muted">Soal <span id="eval-current">1</span>/15</span>
+        </div>
+        <div class="bg-card rounded-2xl border border-border p-8 mb-6" id="eval-question-card">
+          <h3 class="font-display text-lg font-semibold mb-6" id="eval-question-text"></h3>
+          <div class="space-y-3" id="eval-options-container"></div>
+        </div>
+        <div class="flex justify-between">
+          <button class="btn-secondary px-6 py-3 rounded-xl font-semibold" id="eval-prev-btn" onclick="prevEvalQuestion()" disabled>Sebelumnya</button>
+          <button class="btn-primary px-8 py-3 rounded-xl font-semibold text-white" id="eval-next-btn" onclick="nextEvalQuestion()">Selanjutnya</button>
+        </div>
+      </div>
+      
+      <!-- SECTION 4: RESULTS -->
+      <div class="hidden" id="results-area">
+        <div class="text-center mb-8">
+          <div class="w-24 h-24 rounded-full mx-auto mb-6 flex items-center justify-center" id="result-circle"><span class="text-4xl font-display font-bold" id="result-score">0</span></div>
+          <h3 class="font-display text-2xl font-bold mb-2" id="result-title">Hasil Evaluasi</h3>
+        </div>
+        <div class="grid md:grid-cols-2 gap-4 mb-8">
+          <div class="p-6 rounded-xl bg-card border border-border"><div class="flex justify-between items-center"><span class="text-muted">Jawaban Benar</span><span class="font-display font-bold text-green-500" id="correct-count">0</span></div></div>
+          <div class="p-6 rounded-xl bg-card border border-border"><div class="flex justify-between items-center"><span class="text-muted">Jawaban Salah</span><span class="font-display font-bold text-red-500" id="wrong-count">0</span></div></div>
+        </div>
+        <div class="flex gap-4">
+          <button class="flex-1 btn-secondary px-8 py-4 rounded-xl font-semibold" onclick="reviewAnswers()">Lihat Pembahasan</button>
+          <button class="flex-1 btn-primary px-8 py-4 rounded-xl font-semibold text-white" onclick="restartEvaluation()">Ulangi Evaluasi</button>
+        </div>
+      </div>
+
+      <!-- SECTION 5: MENU GURU -->
+      <div class="mt-12 border-t border-border pt-8">
+        <h3 class="font-display font-semibold text-muted mb-4">Menu Guru</h3>
+        <button onclick="exportToExcel()" class="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Export Data ke Excel
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="assets/js/quiz.js"></script>
+  <script>
+    const canvas = document.getElementById('particles-canvas');
+    if(canvas) canvas.style.display = 'none'; 
+    document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>

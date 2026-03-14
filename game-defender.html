@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buffer Defender - ChemBufferLab</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- PATH DIPERBAIKI -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script> tailwind.config = { theme: { extend: { fontFamily: { display: ['Space Grotesk', 'sans-serif'], body: ['DM Sans', 'sans-serif'] }, colors: { primary: '#0d9488', accent: '#22d3ee', dark: '#0f172a', darker: '#020617', card: '#1e293b', muted: '#94a3b8' } } } } </script>
+</head>
+<body class="min-h-screen bg-darker text-white overflow-hidden">
+  
+  <!-- NAVBAR -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-darker/80 backdrop-blur-xl border-b border-border h-16">
+    <nav class="max-w-7xl mx-auto px-4 h-full flex items-center justify-between">
+      <a href="game.html" class="flex items-center gap-3 group">
+        <svg class="w-6 h-6 text-muted group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"/></svg>
+        <span class="font-display font-bold text-lg text-muted group-hover:text-white transition-colors">Back to Menu</span>
+      </a>
+    </nav>
+  </header>
+
+  <!-- MAIN GAME AREA -->
+  <main class="pt-16 h-screen flex">
+    <!-- Canvas Container -->
+    <div class="flex-1 relative bg-slate-900">
+      <canvas id="gameCanvas" class="block w-full h-full"></canvas>
+      <!-- Overlay -->
+      <div id="gameOverlay" class="absolute inset-0 bg-black/80 flex flex-col items-center justify-center z-20 backdrop-blur-sm">
+        <h1 class="font-display text-5xl font-bold text-red-400 mb-4 text-center">BUFFER DEFENDER</h1>
+        <p class="text-muted mb-8 max-w-md text-center">Jaga pH larutan (4 - 10) dari serangan ion!</p>
+        <div id="finalScoreDisplay" class="hidden mb-6 text-center">
+            <p class="text-muted">Skor Akhir</p>
+            <p class="text-4xl font-display font-bold text-yellow-400" id="finalScore">0</p>
+        </div>
+        <button onclick="startGame()" class="btn-primary px-10 py-4 rounded-xl font-semibold text-white text-lg shadow-lg shadow-primary/30">
+          Mulai Game
+        </button>
+      </div>
+    </div>
+
+    <!-- Side Panel -->
+    <aside class="w-80 bg-card border-l border-border p-6 flex flex-col gap-6 overflow-y-auto hidden md:flex">
+        <div>
+            <h2 class="font-display text-lg font-bold mb-2">Status Larutan</h2>
+            <div class="bg-dark rounded-xl p-4 border border-border">
+                <div class="flex justify-between items-end mb-2">
+                    <span class="text-sm text-muted">pH</span>
+                    <span class="text-3xl font-display font-bold" id="currentPH">7.00</span>
+                </div>
+                <div class="w-full h-3 rounded-full bg-gray-700 overflow-hidden">
+                    <div id="phBar" class="h-full bg-gradient-to-r from-red-500 via-green-400 to-blue-500" style="width: 50%"></div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h2 class="font-display text-lg font-bold mb-2">Statistik</h2>
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-dark p-3 rounded-xl text-center border border-border">
+                    <div class="text-2xl font-bold text-accent" id="scoreDisplay">0</div>
+                    <div class="text-xs text-muted">Skor</div>
+                </div>
+                <div class="bg-dark p-3 rounded-xl text-center border border-border">
+                    <div class="text-2xl font-bold text-yellow-400" id="levelDisplay">1</div>
+                    <div class="text-xs text-muted">Level</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+  </main>
+
+  <!-- PATH DIPERBAIKI -->
+  <script src="assets/js/game.js"></script>
+</body>
+</html>

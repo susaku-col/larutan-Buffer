@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latihan - ChemBufferLab</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- PATH DIPERBAIKI -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script> tailwind.config = { theme: { extend: { fontFamily: { display: ['Space Grotesk', 'sans-serif'], body: ['DM Sans', 'sans-serif'] }, colors: { primary: '#0d9488', accent: '#22d3ee', dark: '#0f172a', darker: '#020617', card: '#1e293b', muted: '#94a3b8' } } } } </script>
+</head>
+<body class="min-h-screen">
+  <canvas id="particles-canvas"></canvas>
+  
+  <!-- NAVBAR -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-darker/80 backdrop-blur-xl border-b border-border">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+          </div>
+          <span class="font-display font-bold text-xl">ChemBufferLab</span>
+        </div>
+        <div class="desktop-menu items-center gap-1">
+          <a href="index.html" class="nav-link px-4 py-2 text-sm font-medium">Home</a>
+          <a href="materi.html" class="nav-link px-4 py-2 text-sm font-medium">Materi</a>
+          <a href="simulasi.html" class="nav-link px-4 py-2 text-sm font-medium">Simulasi</a>
+          <a href="latihan.html" class="nav-link px-4 py-2 text-sm font-medium active">Latihan</a>
+          <a href="game.html" class="nav-link px-4 py-2 text-sm font-medium">Game</a>
+          <a href="evaluasi.html" class="nav-link px-4 py-2 text-sm font-medium">Evaluasi</a>
+        </div>
+        <button id="mobile-menu-btn" class="mobile-menu p-2 rounded-lg hover:bg-card"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+      </div>
+      <div id="mobile-menu" class="hidden pb-4">
+        <div class="flex flex-col gap-2">
+          <a href="index.html" class="nav-link px-4 py-2 text-sm font-medium text-left">Home</a>
+          <a href="materi.html" class="nav-link px-4 py-2 text-sm font-medium text-left">Materi</a>
+          <a href="simulasi.html" class="nav-link px-4 py-2 text-sm font-medium text-left">Simulasi</a>
+          <a href="latihan.html" class="nav-link px-4 py-2 text-sm font-medium text-left active">Latihan</a>
+          <a href="game.html" class="nav-link px-4 py-2 text-sm font-medium text-left">Game</a>
+          <a href="evaluasi.html" class="nav-link px-4 py-2 text-sm font-medium text-left">Evaluasi</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="relative z-10 pt-20">
+    <div class="max-w-4xl mx-auto px-4 py-10">
+      <h1 class="font-display text-3xl sm:text-4xl font-bold mb-2">Latihan Soal</h1>
+      <p class="text-muted mb-10">Uji pemahamanmu dengan soal-soal larutan penyangga</p>
+      
+      <!-- Quiz Progress -->
+      <div class="mb-8">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-sm text-muted">Soal <span id="current-question">1</span> dari <span id="total-questions">5</span></span>
+          <span class="text-sm text-accent">Skor: <span id="quiz-score">0</span></span>
+        </div>
+        <div class="progress-bar h-2">
+          <div class="progress-fill" id="quiz-progress" style="width: 20%"></div>
+        </div>
+      </div>
+      
+      <!-- Question Card -->
+      <div class="bg-card rounded-2xl border border-border p-8 mb-6" id="question-card">
+        <div class="mb-6">
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-medium bg-primary/20 text-primary mb-4" id="question-level">Level 1 - Konsep</span>
+          <div id="question-story" class="hidden"></div>
+          <div id="question-image" class="hidden"></div>
+          <h3 class="font-display text-xl font-semibold" id="question-text">Loading...</h3>
+        </div>
+        <div class="space-y-3" id="options-container"></div>
+      </div>
+      
+      <!-- Feedback -->
+      <div class="hidden p-6 rounded-2xl border mb-6" id="feedback-card">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center" id="feedback-icon"></div>
+          <div>
+            <h4 class="font-display font-semibold mb-2" id="feedback-title"></h4>
+            <p class="text-sm text-muted" id="feedback-text"></p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Actions -->
+      <div class="flex justify-between">
+        <a href="simulasi.html" class="btn-secondary px-6 py-3 rounded-xl font-semibold flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"/></svg>
+          Kembali
+        </a>
+        <button class="btn-primary px-8 py-3 rounded-xl font-semibold text-white hidden" id="next-btn" onclick="nextQuestion()">
+          Soal Berikutnya
+          <svg class="w-5 h-5 inline ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- PATH DIPERBAIKI -->
+  <script src="assets/js/quiz.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+       initLatihan();
+       document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+         document.getElementById('mobile-menu').classList.toggle('hidden');
+       });
+    });
+  </script>
+</body>
+</html>

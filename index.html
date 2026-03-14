@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChemBufferLab - Pembelajaran Larutan Penyangga</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- PATH DIPERBAIKI -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { display: ['Space Grotesk', 'sans-serif'], body: ['DM Sans', 'sans-serif'] }, colors: { primary: '#0d9488', accent: '#22d3ee', dark: '#0f172a', darker: '#020617', card: '#1e293b', muted: '#94a3b8' } } }
+    }
+  </script>
+</head>
+<body class="min-h-screen">
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-darker/80 backdrop-blur-xl border-b border-border">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+          </div>
+          <span class="font-display font-bold text-xl">ChemBufferLab</span>
+        </div>
+        
+        <div class="desktop-menu items-center gap-1">
+          <a href="index.html" class="nav-link px-4 py-2 text-sm font-medium active">Home</a>
+          <a href="materi.html" class="nav-link px-4 py-2 text-sm font-medium">Materi</a>
+          <a href="simulasi.html" class="nav-link px-4 py-2 text-sm font-medium">Simulasi</a>
+          <a href="latihan.html" class="nav-link px-4 py-2 text-sm font-medium">Latihan</a>
+          <a href="game.html" class="nav-link px-4 py-2 text-sm font-medium">Game</a>
+          <a href="evaluasi.html" class="nav-link px-4 py-2 text-sm font-medium">Evaluasi</a>
+        </div>
+        
+        <button id="mobile-menu-btn" class="mobile-menu p-2 rounded-lg hover:bg-card">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+      <div id="mobile-menu" class="hidden pb-4">
+        <div class="flex flex-col gap-2">
+          <a href="index.html" class="nav-link px-4 py-2 text-sm font-medium text-left active">Home</a>
+          <a href="materi.html" class="nav-link px-4 py-2 text-sm font-medium text-left">Materi</a>
+          <a href="simulasi.html" class="nav-link px-4 py-2 text-sm font-medium text-left">Simulasi</a>
+          <a href="latihan.html" class="nav-link px-4 py-2 text-sm font-medium text-left">Latihan</a>
+          <a href="game.html" class="nav-link px-4 py-2 text-sm font-medium text-left">Game</a>
+          <a href="evaluasi.html" class="nav-link px-4 py-2 text-sm font-medium text-left">Evaluasi</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="relative z-10 pt-16">
+    <!-- HOME SECTION -->
+    <section class="min-h-screen flex items-center">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="section-content grid lg:grid-cols-2 gap-12 items-center">
+          <!-- Left Content -->
+          <div>
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-card border border-border mb-6">
+              <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+              <span class="text-sm text-muted">Pembelajaran Interaktif</span>
+            </div>
+            <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+              Belajar <span class="text-accent">Larutan Penyangga</span> Secara Interaktif
+            </h1>
+            <p class="text-lg text-muted mb-8 leading-relaxed">
+              Eksplorasi konsep buffer melalui simulasi virtual, latihan soal interaktif, dan game edukasi. Pahami kimia dengan cara yang menyenangkan.
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <a href="materi.html" class="btn-primary px-8 py-4 rounded-xl font-semibold text-white">Mulai Belajar</a>
+              <a href="simulasi.html" class="btn-secondary px-8 py-4 rounded-xl font-semibold">Coba Simulasi</a>
+            </div>
+          </div>
+          
+          <!-- Right Content - Animated Beaker -->
+          <div class="relative flex justify-center">
+            <div class="relative">
+              <div class="absolute -top-10 -left-10 w-40 h-40 bg-primary/20 rounded-full blur-3xl"></div>
+              <div class="absolute -bottom-10 -right-10 w-60 h-60 bg-accent/20 rounded-full blur-3xl"></div>
+              <div class="beaker relative z-10" id="hero-beaker">
+                <div class="liquid bg-gradient-to-t from-teal-600 to-teal-400" id="hero-liquid"></div>
+                <div class="bubble w-2 h-2" style="left: 20%; bottom: 10%; animation-delay: 0s;"></div>
+                <div class="bubble w-3 h-3" style="left: 50%; bottom: 20%; animation-delay: 0.5s;"></div>
+                <div class="bubble w-2 h-2" style="left: 70%; bottom: 15%; animation-delay: 1s;"></div>
+              </div>
+              <div class="absolute -right-20 top-1/2 -translate-y-1/2 bg-card px-4 py-2 rounded-lg border border-border">
+                <span class="text-sm text-muted">pH</span>
+                <span class="block font-display text-2xl font-bold text-accent" id="hero-ph">7.0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Features Grid -->
+        <div class="section-content mt-20" style="transition-delay: 0.2s;">
+          <h2 class="font-display text-2xl font-bold text-center mb-10">Fitur Pembelajaran</h2>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <a href="materi.html" class="feature-card p-6 rounded-2xl border border-border">
+              <div class="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center mb-4">
+                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+              </div>
+              <h3 class="font-display font-semibold text-lg mb-2">Materi Lengkap</h3>
+              <p class="text-sm text-muted">Konsep asam-basa hingga perhitungan pH buffer</p>
+            </a>
+            
+            <a href="simulasi.html" class="feature-card p-6 rounded-2xl border border-border">
+              <div class="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center mb-4">
+                <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+              </div>
+              <h3 class="font-display font-semibold text-lg mb-2">Simulasi Virtual</h3>
+              <p class="text-sm text-muted">Eksperimen buffer secara interaktif</p>
+            </a>
+            
+            <a href="latihan.html" class="feature-card p-6 rounded-2xl border border-border">
+              <div class="w-12 h-12 rounded-xl bg-yellow-500/20 flex items-center justify-center mb-4">
+                <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+              </div>
+              <h3 class="font-display font-semibold text-lg mb-2">Latihan Soal</h3>
+              <p class="text-sm text-muted">Soal bertingkat dengan pembahasan</p>
+            </a>
+            
+            <a href="game.html" class="feature-card p-6 rounded-2xl border border-border">
+              <div class="w-12 h-12 rounded-xl bg-pink-500/20 flex items-center justify-center mb-4">
+                <svg class="w-6 h-6 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <h3 class="font-display font-semibold text-lg mb-2">Game Edukasi</h3>
+              <p class="text-sm text-muted">Belajar sambil bermain</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="relative z-10 border-t border-border bg-darker py-8 mt-20">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-sm text-muted">ChemBufferLab - Media Pembelajaran Interaktif Larutan Penyangga</p>
+    </div>
+  </footer>
+
+  <!-- PATH DIPERBAIKI -->
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

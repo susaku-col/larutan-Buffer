@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab Virtual - ChemBufferLab</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- PATH DIPERBAIKI -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script> tailwind.config = { theme: { extend: { fontFamily: { display: ['Space Grotesk', 'sans-serif'], body: ['DM Sans', 'sans-serif'] }, colors: { primary: '#0d9488', accent: '#22d3ee', dark: '#0f172a', darker: '#020617', card: '#1e293b', muted: '#94a3b8' } } } } </script>
+</head>
+<body class="min-h-screen bg-darker text-white">
+  <!-- NAVBAR -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-darker/90 backdrop-blur-xl border-b border-border">
+    <nav class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+        </div>
+        <span class="font-display font-bold text-xl">ChemBufferLab</span>
+      </a>
+      <div class="desktop-menu items-center gap-1">
+        <a href="index.html" class="nav-link px-4 py-2 text-sm font-medium">Home</a>
+        <a href="materi.html" class="nav-link px-4 py-2 text-sm font-medium">Materi</a>
+        <a href="simulasi.html" class="nav-link px-4 py-2 text-sm font-medium active">Simulasi</a>
+        <a href="latihan.html" class="nav-link px-4 py-2 text-sm font-medium">Latihan</a>
+        <a href="game.html" class="nav-link px-4 py-2 text-sm font-medium">Game</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="pt-24 pb-10 px-4 max-w-7xl mx-auto">
+    <h1 class="font-display text-3xl font-bold mb-2">Lab Virtual Larutan Penyangga</h1>
+    <p class="text-muted mb-8">Eksperimen interaktif: Ubah konsentrasi, tambahkan asam/basa, dan amati reaksi molekul.</p>
+
+    <div class="grid lg:grid-cols-4 gap-6">
+      <!-- PANEL KONTROL -->
+      <div class="lg:col-span-1 space-y-4">
+        <div class="bg-card rounded-2xl border border-border p-5">
+          <h3 class="font-display font-semibold mb-4 text-accent">Setup Buffer</h3>
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm text-muted mb-1">Sistem Buffer</label>
+              <select id="buffer-type" onchange="resetSimulation()" class="w-full bg-dark border border-border rounded-lg px-3 py-2 text-sm focus:border-accent outline-none">
+                <option value="acetate">Asetat (CH3COOH/CH3COO-)</option>
+                <option value="ammonia">Amonia (NH3/NH4+)</option>
+              </select>
+            </div>
+            <div>
+              <div class="flex justify-between text-xs mb-1">
+                <span class="text-muted">Konsentrasi Asam (HA)</span>
+                <span class="text-white font-bold" id="val-ha">0.10 M</span>
+              </div>
+              <input type="range" id="conc-ha" min="0.01" max="1.0" step="0.01" value="0.1" oninput="updateInitConc()" class="w-full">
+            </div>
+            <div>
+              <div class="flex justify-between text-xs mb-1">
+                <span class="text-muted">Konsentrasi Garam (A-)</span>
+                <span class="text-white font-bold" id="val-a">0.10 M</span>
+              </div>
+              <input type="range" id="conc-a" min="0.01" max="1.0" step="0.01" value="0.1" oninput="updateInitConc()" class="w-full">
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-card rounded-2xl border border-border p-5">
+          <h3 class="font-display font-semibold mb-4 text-red-400">Penambahan</h3>
+          <div class="grid grid-cols-2 gap-3">
+            <button onclick="addReagent('acid')" class="p-3 rounded-xl bg-red-500/10 border border-red-500/30 hover:bg-red-500/20 transition-colors text-center">
+              <div class="text-red-400 font-bold text-sm">+ HCl</div>
+              <div class="text-xs text-muted">Asam Kuat</div>
+            </button>
+            <button onclick="addReagent('base')" class="p-3 rounded-xl bg-blue-500/10 border border-blue-500/30 hover:bg-blue-500/20 transition-colors text-center">
+              <div class="text-blue-400 font-bold text-sm">+ NaOH</div>
+              <div class="text-xs text-muted">Basa Kuat</div>
+            </button>
+          </div>
+          <div class="mt-4 text-xs text-muted">
+            Volume ditambahkan: <span id="vol-added" class="text-white">0.0</span> mL
+          </div>
+          <button onclick="resetSimulation()" class="w-full mt-4 py-2 rounded-lg border border-border text-muted hover:border-accent hover:text-accent text-sm transition-colors">
+            Reset Eksperimen
+          </button>
+        </div>
+      </div>
+
+      <!-- AREA VISUALISASI -->
+      <div class="lg:col-span-2 bg-card rounded-2xl border border-border overflow-hidden relative h-[500px] md:h-auto">
+        <canvas id="labCanvas" class="w-full h-full"></canvas>
+        <div class="absolute bottom-4 right-4 bg-black/60 backdrop-blur-sm px-6 py-3 rounded-xl border border-white/10 text-right">
+          <div class="text-xs text-muted uppercase tracking-widest">pH Larutan</div>
+          <div class="text-4xl font-display font-bold text-accent" id="ph-display">4.74</div>
+        </div>
+      </div>
+
+      <!-- PANEL DATA -->
+      <div class="lg:col-span-1 space-y-4">
+        <div class="bg-card rounded-2xl border border-border p-5 h-64">
+          <h3 class="font-display font-semibold mb-3 text-sm">Grafik Titrasi</h3>
+          <canvas id="titrationChart"></canvas>
+        </div>
+        <div class="bg-card rounded-2xl border border-border p-5">
+          <h3 class="font-display font-semibold mb-3 text-sm">Komposisi Molekul</h3>
+          <div class="space-y-2 text-xs font-mono">
+            <div class="flex justify-between"><span><span class="inline-block w-2 h-2 rounded-full bg-blue-400 mr-1"></span> HA</span><span id="count-ha">0</span></div>
+            <div class="flex justify-between"><span><span class="inline-block w-2 h-2 rounded-full bg-green-400 mr-1"></span> A-</span><span id="count-a">0</span></div>
+            <div class="flex justify-between"><span><span class="inline-block w-2 h-2 rounded-full bg-red-500 mr-1"></span> H+</span><span id="count-h">0</span></div>
+            <div class="flex justify-between"><span><span class="inline-block w-2 h-2 rounded-full bg-purple-400 mr-1"></span> OH-</span><span id="count-oh">0</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- PATH DIPERBAIKI -->
+  <script src="assets/js/simulasi.js"></script>
+</body>
+</html>

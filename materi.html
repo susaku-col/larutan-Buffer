@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materi - ChemBufferLab</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- PATH DIPERBAIKI -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script> tailwind.config = { theme: { extend: { fontFamily: { display: ['Space Grotesk', 'sans-serif'], body: ['DM Sans', 'sans-serif'] }, colors: { primary: '#0d9488', accent: '#22d3ee', dark: '#0f172a', darker: '#020617', card: '#1e293b', muted: '#94a3b8' } } } } </script>
+</head>
+<body class="min-h-screen">
+  <canvas id="particles-canvas"></canvas>
+  
+  <!-- NAVBAR -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-darker/80 backdrop-blur-xl border-b border-border">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+          </div>
+          <span class="font-display font-bold text-xl">ChemBufferLab</span>
+        </div>
+        <div class="desktop-menu items-center gap-1">
+          <a href="index.html" class="nav-link px-4 py-2 text-sm font-medium">Home</a>
+          <a href="materi.html" class="nav-link px-4 py-2 text-sm font-medium active">Materi</a>
+          <a href="simulasi.html" class="nav-link px-4 py-2 text-sm font-medium">Simulasi</a>
+          <a href="latihan.html" class="nav-link px-4 py-2 text-sm font-medium">Latihan</a>
+          <a href="game.html" class="nav-link px-4 py-2 text-sm font-medium">Game</a>
+          <a href="evaluasi.html" class="nav-link px-4 py-2 text-sm font-medium">Evaluasi</a>
+        </div>
+        <button id="mobile-menu-btn" class="mobile-menu p-2 rounded-lg hover:bg-card">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+      <div id="mobile-menu" class="hidden pb-4">
+        <div class="flex flex-col gap-2">
+          <a href="index.html" class="nav-link px-4 py-2 text-sm font-medium text-left">Home</a>
+          <a href="materi.html" class="nav-link px-4 py-2 text-sm font-medium text-left active">Materi</a>
+          <a href="simulasi.html" class="nav-link px-4 py-2 text-sm font-medium text-left">Simulasi</a>
+          <a href="latihan.html" class="nav-link px-4 py-2 text-sm font-medium text-left">Latihan</a>
+          <a href="game.html" class="nav-link px-4 py-2 text-sm font-medium text-left">Game</a>
+          <a href="evaluasi.html" class="nav-link px-4 py-2 text-sm font-medium text-left">Evaluasi</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="relative z-10 pt-20">
+    <div class="max-w-5xl mx-auto px-4 py-10">
+      <h1 class="font-display text-3xl sm:text-4xl font-bold mb-2">Materi Pembelajaran</h1>
+      <p class="text-muted mb-10">Pelajari konsep larutan penyangga secara bertahap</p>
+      
+      <!-- Progress -->
+      <div class="mb-8">
+        <div class="flex justify-between text-sm mb-2">
+          <span class="text-muted">Progress Belajar</span>
+          <span class="text-accent" id="materi-progress-text">0/7 Modul</span>
+        </div>
+        <div class="progress-bar h-2">
+          <div class="progress-fill" id="materi-progress-bar" style="width: 0%"></div>
+        </div>
+      </div>
+      
+      <!-- Accordion Modules -->
+      <div class="space-y-4" id="materi-accordion">
+        
+        <!-- Modul 1 -->
+        <div class="accordion-item bg-card rounded-2xl border border-border overflow-hidden">
+          <button class="accordion-trigger w-full p-6 text-left flex items-center justify-between" onclick="toggleAccordion(0)">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center font-display font-bold text-primary">1</div>
+              <div>
+                <h3 class="font-display font-semibold">Pentingnya Kesetimbangan pH</h3>
+                <p class="text-sm text-muted">Pengantar mengapa tubuh membutuhkan buffer</p>
+              </div>
+            </div>
+            <svg class="w-5 h-5 text-muted accordion-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="accordion-content">
+            <div class="p-6 pt-0 border-t border-border">
+              <p class="text-muted mb-4">Tubuh manusia tidak bisa menerima pH yang tiba-tiba naik atau turun drastis akibat larutan asam atau basa. Hal ini berbahaya bagi tubuh bahkan bisa menyebabkan kematian.</p>
+              <!-- PATH GAMBAR DIPERBAIKI -->
+              <div class="mb-4 rounded-xl overflow-hidden border border-border bg-dark/50">
+                <img src="assets/images/phtubuh.jpg" alt="Ilustrasi Keseimbangan pH" class="w-full h-auto object-cover">
+              </div>
+              <p class="text-muted">Peran larutan penyangga adalah untuk mempertahankan dan menjaga keseimbangan pH tersebut.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modul 2 -->
+        <div class="accordion-item bg-card rounded-2xl border border-border overflow-hidden">
+          <button class="accordion-trigger w-full p-6 text-left flex items-center justify-between" onclick="toggleAccordion(1)">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center font-display font-bold text-primary">2</div>
+              <div>
+                <h3 class="font-display font-semibold">Pengertian Larutan Penyangga</h3>
+                <p class="text-sm text-muted">Definisi dan sifat-sifat buffer</p>
+              </div>
+            </div>
+            <svg class="w-5 h-5 text-muted accordion-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="accordion-content">
+            <div class="p-6 pt-0 border-t border-border">
+              <p class="text-muted mb-4">Larutan penyangga adalah larutan yang pH-nya relatif tetap dan tidak berubah secara signifikan meskipun ditambahkan sedikit asam kuat, basa kuat, atau diencerkan.</p>
+              <!-- PATH GAMBAR DIPERBAIKI -->
+              <div class="mb-4 rounded-xl overflow-hidden border border-border bg-dark/50">
+                 <img src="assets/images/grafik.png" alt="Grafik Perubahan pH" class="w-full h-auto object-cover">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modul 3 -->
+        <div class="accordion-item bg-card rounded-2xl border border-border overflow-hidden">
+          <button class="accordion-trigger w-full p-6 text-left flex items-center justify-between" onclick="toggleAccordion(2)">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center font-display font-bold text-primary">3</div>
+              <div>
+                <h3 class="font-display font-semibold">Jenis Larutan Penyangga</h3>
+                <p class="text-sm text-muted">Klasifikasi buffer asam dan buffer basa</p>
+              </div>
+            </div>
+            <svg class="w-5 h-5 text-muted accordion-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="accordion-content">
+            <div class="p-6 pt-0 border-t border-border">
+              <div class="space-y-4">
+                <!-- Penyangga Asam -->
+                <div class="p-4 rounded-xl bg-dark border border-border">
+                  <div class="flex flex-col md:flex-row gap-4">
+                    <div class="flex-1">
+                      <h5 class="font-semibold text-green-400 mb-2">1. Larutan Penyangga Asam</h5>
+                      <p class="text-sm text-muted mb-2">Terdiri dari asam lemah dan basa konjugatnya.</p>
+                      <div class="flex flex-wrap gap-2 mb-2">
+                        <span class="px-3 py-1 rounded-full bg-card text-xs font-mono">CH₃COOH + CH₃COONa</span>
+                      </div>
+                    </div>
+                    <!-- PATH GAMBAR DIPERBAIKI -->
+                    <div class="w-full md:w-40 h-28 rounded-lg overflow-hidden border border-border flex-shrink-0 bg-slate-800">
+                       <img src="assets/images/asamasetat.jpg" alt="Struktur Asam Asetat" class="w-full h-full object-contain">
+                    </div>
+                  </div>
+                </div>
+                <!-- Penyangga Basa -->
+                <div class="p-4 rounded-xl bg-dark border border-border">
+                  <div class="flex flex-col md:flex-row gap-4">
+                    <div class="flex-1">
+                      <h5 class="font-semibold text-blue-400 mb-2">2. Larutan Penyangga Basa</h5>
+                      <p class="text-sm text-muted mb-2">Terdiri dari basa lemah dan asam konjugatnya.</p>
+                      <div class="flex flex-wrap gap-2 mb-2">
+                        <span class="px-3 py-1 rounded-full bg-card text-xs font-mono">NH₃ + NH₄Cl</span>
+                      </div>
+                    </div>
+                    <!-- PATH GAMBAR DIPERBAIKI -->
+                    <div class="w-full md:w-40 h-28 rounded-lg overflow-hidden border border-border flex-shrink-0 bg-slate-800">
+                       <img src="assets/images/amonia.jpg" alt="Struktur Amonia" class="w-full h-full object-contain">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Modul 4 -->
+        <div class="accordion-item bg-card rounded-2xl border border-border overflow-hidden">
+          <button class="accordion-trigger w-full p-6 text-left flex items-center justify-between" onclick="toggleAccordion(3)">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center font-display font-bold text-primary">4</div>
+              <div><h3 class="font-display font-semibold">Cara Kerja Buffer</h3><p class="text-sm text-muted">Mekanisme penyanggaan pH</p></div>
+            </div>
+            <svg class="w-5 h-5 text-muted accordion-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="accordion-content">
+            <div class="p-6 pt-0 border-t border-border">
+              <p class="text-muted mb-4">Larutan penyangga mengandung komponen yang dapat bereaksi dengan penambahan asam (H⁺) maupun basa (OH⁻).</p>
+              <!-- PATH GAMBAR DIPERBAIKI -->
+              <div class="mb-6 rounded-xl overflow-hidden border border-border bg-dark/50">
+                 <img src="assets/images/gambar bufferi.jpg" alt="Mekanisme Reaksi Buffer" class="w-full h-auto object-contain p-2">
+              </div>
+              <div class="space-y-4">
+                <div class="p-3 rounded-lg bg-red-500/10 border border-red-500/30">
+                  <h5 class="font-semibold text-red-400 text-sm mb-1">Reaksi dengan Asam (H⁺):</h5>
+                  <code class="text-xs text-accent">CH₃COO⁻ + H⁺ → CH₃COOH</code>
+                </div>
+                <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/30">
+                  <h5 class="font-semibold text-blue-400 text-sm mb-1">Reaksi dengan Basa (OH⁻):</h5>
+                  <code class="text-xs text-accent">CH₃COOH + OH⁻ → CH₃COO⁻ + H₂O</code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modul 5 -->
+        <div class="accordion-item bg-card rounded-2xl border border-border overflow-hidden">
+          <button class="accordion-trigger w-full p-6 text-left flex items-center justify-between" onclick="toggleAccordion(4)">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center font-display font-bold text-primary">5</div>
+              <div><h3 class="font-display font-semibold">Rumus Henderson-Hasselbalch</h3><p class="text-sm text-muted">Perhitungan pH larutan buffer</p></div>
+            </div>
+            <svg class="w-5 h-5 text-muted accordion-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="accordion-content">
+            <div class="p-6 pt-0 border-t border-border">
+              <div class="p-4 rounded-xl bg-gradient-to-r from-primary/20 to-accent/20 border border-accent/30 mb-6 text-center">
+                <p class="font-display text-xl md:text-2xl font-bold text-accent">pH = pKa + log ([A⁻]/[HA])</p>
+              </div>
+              <!-- PATH GAMBAR DIPERBAIKI -->
+              <div class="mb-6 rounded-xl overflow-hidden border border-border bg-dark/50">
+                 <img src="assets/images/henderson.jpg" alt="Rumus Henderson-Hasselbalch" class="w-full h-auto object-contain">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modul 6 -->
+        <div class="accordion-item bg-card rounded-2xl border border-border overflow-hidden">
+          <button class="accordion-trigger w-full p-6 text-left flex items-center justify-between" onclick="toggleAccordion(5)">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center font-display font-bold text-primary">6</div>
+              <div>
+                <h3 class="font-display font-semibold">Contoh dalam Kehidupan</h3>
+                <p class="text-sm text-muted">Aplikasi buffer dalam kehidupan sehari-hari</p>
+              </div>
+            </div>
+            <svg class="w-5 h-5 text-muted accordion-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="accordion-content">
+            <div class="p-6 pt-0 border-t border-border">
+              <div class="space-y-4">
+                <div class="p-4 rounded-xl bg-dark border border-border">
+                  <div class="flex flex-col md:flex-row gap-4 items-center">
+                    <div class="w-full md:w-32 h-24 rounded-lg overflow-hidden border border-border flex-shrink-0">
+                       <!-- PATH GAMBAR DIPERBAIKI -->
+                       <img src="assets/images/shampo.jpg" alt="Contoh Shampo" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                      <h5 class="font-semibold text-purple-400 mb-1">Produk Harian (Shampo)</h5>
+                      <p class="text-sm text-muted">Menjaga pH shampo di rentang 4,5 - 6,0 agar sesuai dengan pH kulit kepala.</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="p-4 rounded-xl bg-dark border border-border">
+                  <div class="flex flex-col md:flex-row gap-4 items-center">
+                    <div class="w-full md:w-32 h-24 rounded-lg overflow-hidden border border-border flex-shrink-0">
+                       <!-- PATH GAMBAR DIPERBAIKI -->
+                       <img src="assets/images/seldarah.jpg" alt="Darah Manusia" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                      <h5 class="font-semibold text-red-400 mb-1">Dalam Darah Manusia</h5>
+                      <p class="text-sm text-muted">Mengandung sistem penyangga karbonat, hemoglobin, dan fosfat.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modul 7 -->
+        <div class="accordion-item bg-card rounded-2xl border border-border overflow-hidden">
+          <button class="accordion-trigger w-full p-6 text-left flex items-center justify-between" onclick="toggleAccordion(6)">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center font-display font-bold text-primary">7</div>
+              <div><h3 class="font-display font-semibold">Contoh Perhitungan pH</h3><p class="text-sm text-muted">Latihan soal perhitungan buffer</p></div>
+            </div>
+            <svg class="w-5 h-5 text-muted accordion-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="accordion-content">
+            <div class="p-6 pt-0 border-t border-border">
+              <div class="p-4 rounded-xl bg-dark border border-border mb-4">
+                <p class="text-sm">Larutan buffer dibuat dari 100 mL CH₃COOH 0.1 M dan 100 mL CH₃COONa 0.1 M. Jika Ka CH₃COOH = 1.8 x 10<sup>-5</sup>, hitung pH larutan!</p>
+              </div>
+              <div class="space-y-3 text-sm">
+                <div class="p-3 rounded-lg bg-card"><p>1. Hitung pKa:</p><code class="text-accent">pKa = -log(1.8 x 10⁻⁵) = 4.74</code></div>
+                <div class="p-3 rounded-lg bg-card"><p>2. Perbandingan konsentrasi:</p><code class="text-accent">[A⁻]/[HA] = 0.1/0.1 = 1</code></div>
+                <div class="p-3 rounded-lg bg-card"><p>3. Hitung pH:</p><code class="text-accent">pH = 4.74 + log(1) = 4.74</code></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-10 flex justify-end">
+        <a href="simulasi.html" class="btn-primary px-8 py-4 rounded-xl font-semibold text-white flex items-center gap-2">
+          Lanjut ke Simulasi
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- PATH DIPERBAIKI -->
+  <script src="assets/js/main.js"></script>
+  <script>
+    // Inline script logic
+    let completedModules = new Set();
+    function toggleAccordion(index) {
+      const items = document.querySelectorAll('.accordion-item');
+      const content = items[index].querySelector('.accordion-content');
+      const icon = items[index].querySelector('.accordion-icon');
+      items.forEach((item, i) => {
+        if (i !== index) {
+          item.querySelector('.accordion-content').classList.remove('open');
+          item.querySelector('.accordion-icon').style.transform = 'rotate(0deg)';
+        }
+      });
+      content.classList.toggle('open');
+      icon.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+      if (content.classList.contains('open')) {
+        completedModules.add(index);
+        updateMateriProgress();
+      }
+    }
+    function updateMateriProgress() {
+      const progress = (completedModules.size / 7) * 100;
+      document.getElementById('materi-progress-bar').style.width = progress + '%';
+      document.getElementById('materi-progress-text').textContent = completedModules.size + '/7 Modul';
+    }
+  </script>
+</body>
+</html>
